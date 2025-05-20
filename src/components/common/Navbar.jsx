@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Search, MapPin } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { fetchAllVenues } from '../../services/api';
-import { venueImages } from '../../assets/images';
+import { venueImages } from '../../../public/assets/images';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -147,7 +147,8 @@ const Navbar = () => {
                 ? 'bg-gradient-to-r from-pink-600 to-purple-700 bg-clip-text text-transparent' 
                 : 'text-white drop-shadow-md'
             }`}>
-              Find<span className={scrolled ? 'text-pink-500' : 'text-pink-300'}>My</span>Venue
+              <img src="/vite.jpg" alt="Logo" className="w-12 h-12 mr-2 rounded" />
+              {/* Find<span className={scrolled ? 'text-pink-500' : 'text-pink-300'}>My</span>Venue */}
             </span>
           </Link>
 
