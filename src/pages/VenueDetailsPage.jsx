@@ -150,9 +150,11 @@ const VenueDetailsPage = () => {
       );
 
       setIsDateAvailable(available);
+      return available;
     } catch (error) {
       console.error('Error checking availability:', error);
       setIsDateAvailable(false);
+      return false;
     } finally {
       setIsCheckingAvailability(false);
     }
@@ -185,19 +187,27 @@ const VenueDetailsPage = () => {
       return;
     }
     
-    // Format the date properly for URL parameter
-    const formattedDate = selectedDate;
-    
-    // Log for debugging
-    console.log(`Navigating to booking page: /booking/${venue._id}?date=${formattedDate}`);
-    
-    // Ensure we're scrolling to top before navigation
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    
-    // Use setTimeout to ensure the scroll completes before navigation
-    setTimeout(() => {
-      navigate(`/booking/${venue._id}?date=${formattedDate}`);
-    }, 100);
+    // Verify availability one last time before navigating
+    checkAvailability(selectedDate).then(isAvailable => {
+      if (isAvailable) {
+        // Format the date properly for URL parameter
+        const formattedDate = selectedDate;
+        
+        // Log for debugging
+        console.log(`Navigating to booking page: /booking/${venue._id}?date=${formattedDate}`);
+        
+        // Ensure we're scrolling to top before navigation
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Use setTimeout to ensure the scroll completes before navigation
+        setTimeout(() => {
+          navigate(`/booking/${venue._id}?date=${formattedDate}`);
+        }, 100);
+      } else {
+        setIsDateAvailable(false);
+        setSelectedDate('');
+      }
+    });
   };
 
   const formatLocation = (venue) => {

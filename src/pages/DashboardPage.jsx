@@ -359,7 +359,7 @@ const ViewBookings = () => {
                   type="date"
                   value={newDate}
                   onChange={handleDateChange}
-                  min="2025-05-08"
+                  min={new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0]}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent shadow-sm"
                   required
                   disabled={isCheckingAvailability}
@@ -370,9 +370,9 @@ const ViewBookings = () => {
                   </div>
                 )}
               </div>
-              <p className="text-xs text-gray-500 mt-2 flex items-center">
+              {/* <p className="text-xs text-gray-500 mt-2 flex items-center">
                 <Calendar className="h-3 w-3 mr-1" /> Bookings are available from May 8, 2025 onwards
-              </p>
+              </p> */}
               <p className="text-xs text-gray-500 mt-1 flex items-center">
                 <X className="h-3 w-3 mr-1" /> Venue is closed on Mondays
               </p>
@@ -414,7 +414,7 @@ const ProfileSettings = () => {
     name: user?.name || '',
     email: user?.email || '',
     phone: user?.phone || '',
-    currentPassword: '',
+    currentPassword: user?.confirmPassword || '',
     newPassword: '',
     confirmPassword: ''
   });

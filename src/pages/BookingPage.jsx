@@ -25,6 +25,7 @@ const BookingPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [dateError, setDateError] = useState(null);
   const [isCheckingAvailability, setIsCheckingAvailability] = useState(false);
+  const [isDateLocked, setIsDateLocked] = useState(false);
   
   // New form fields
   const [eventType, setEventType] = useState('');
@@ -107,13 +108,14 @@ const BookingPage = () => {
     const dateParam = searchParams.get('date');
     if (dateParam) {
       setSelectedDate(dateParam);
+      setIsDateLocked(true); // Lock the date if it comes from URL
       // Validate the date only once on mount if present
       (async () => {
         setIsCheckingAvailability(true);
         try {
           const isAvailable = await checkAvailability(dateParam);
           if (!isAvailable) {
-            setDateError('This date is not available. Please select another date.');
+            setDateError('');
           }
         } catch (error) {
           console.error('Error validating initial date:', error);
@@ -126,6 +128,9 @@ const BookingPage = () => {
   }, []); // Only run once on mount
 
   const handleDateChange = useCallback(async (e) => {
+    // If date is locked, don't allow changes
+    if (isDateLocked) return;
+
     const { value } = e.target;
     setDateError(null);
     
@@ -149,7 +154,7 @@ const BookingPage = () => {
     } finally {
       setIsCheckingAvailability(false);
     }
-  }, [checkAvailability]);
+  }, [checkAvailability, isDateLocked]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -431,12 +436,14 @@ const BookingPage = () => {
                           <input
                             type="date"
                             className={`w-full pl-10 pr-4 py-3 border-2 rounded-lg ${
-                              dateError ? 'border-red-300 bg-red-50' : 'border-gray-300 focus:border-pink-500'
-                            } focus:outline-none focus:ring-2 focus:ring-pink-200`}
+                              dateError ? 'border-red-300 bg-red-50' : isDateLocked ? 'border-gray-300 bg-gray-50' : 'border-gray-300 focus:border-pink-500'
+                            } focus:outline-none focus:ring-2 focus:ring-pink-200 ${isDateLocked ? 'cursor-not-allowed' : ''}`}
                             min={new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0]}
-                            value={selectedDate}
+                            value={selectedDate || ''}
                             onChange={handleDateChange}
                             required
+                            readOnly={isDateLocked}
+                            disabled={isDateLocked}
                           />
                         </div>
                         {dateError && <p className="mt-1 text-sm text-red-600">{dateError}</p>}
@@ -483,7 +490,7 @@ const BookingPage = () => {
                             id="guest_count"
                             type="number"
                             min="1"
-                            max={venue?.capacity || 1000}
+                            max={venue?.capacity < guestCount ? venue?.capacity : guestCount}
                             className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200"
                             value={guestCount}
                             onChange={(e) => setGuestCount(parseInt(e.target.value))}
