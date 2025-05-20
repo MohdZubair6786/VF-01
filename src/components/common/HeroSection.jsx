@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, ArrowRight } from 'lucide-react';
-import { venueImages } from '../../assets/images';
+import { venueImages } from '../../../public/assets/Images';
 import { fetchAllVenues } from '../../services/api';
 
 const HeroSection = () => {

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, Users, Calendar, Star, ArrowRight, Heart } from 'lucide-react';
 import Button from '../components/common/Button';
 import { fetchPopularVenues, testBackendConnection, fetchAllVenues } from '../services/api';
-import { venueImages } from '../assets/images';
+import { venueImages } from '../../public/assets/Images';
 import HeroSection from '../components/common/HeroSection';
 
 const HomePage = () => {
