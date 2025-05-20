@@ -4,7 +4,7 @@ import { Search, MapPin, Users, Filter, X, Calendar } from 'lucide-react';
 import Button from '../components/common/Button';
 import Footer from '../components/common/Footer';
 import { fetchAllVenues } from '../services/api';
-import { venueImages } from '../../public/assets/Images';
+import { venueImages } from '../utils/images';
 import { motion } from 'framer-motion';
 
 // Define filter options

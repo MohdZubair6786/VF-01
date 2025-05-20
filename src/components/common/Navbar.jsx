@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Search, MapPin } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { fetchAllVenues } from '../../services/api';
-import { venueImages } from '../../../public/assets/Images';
+import { venueImages } from '../../utils/images';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

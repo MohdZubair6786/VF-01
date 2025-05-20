@@ -4,7 +4,7 @@ import { MapPin, Users, Calendar, Clock, Car, Utensils, Home, Star, ChevronLeft,
 import Button from '../components/common/Button';
 import Footer from '../components/common/Footer';
 import { getVenueById, checkVenueAvailability } from '../services/api';
-import { venueImages } from '../../public/assets/Images';
+import { venueImages } from '../utils/images';
 import { setToStartOfDay, setToEndOfDay, isValidBookingDate } from '../utils/dateUtils';
 import axios from 'axios';
 import Lightbox from 'yet-another-react-lightbox';
