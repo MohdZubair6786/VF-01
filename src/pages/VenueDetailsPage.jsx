@@ -27,7 +27,7 @@ const getVenueImageList = (venueName) => {
     let found = false;
     for (const ext of extensions) {
       const fileName = `${venueName} ${i}.${ext}`;
-      const path = `/src/assets/Images/${fileName}`;
+      const path = `./assets/Images/${fileName}`;
       // Only add if not already in images
       if (!images.find(img => img.src === path)) {
         images.push({ src: path });
