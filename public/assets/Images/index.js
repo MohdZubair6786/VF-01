@@ -17,7 +17,7 @@ import uppalconventionhall from './Uppal Convention Hall.webp';
 import dilsukhnagargrandpalace from './Dilsukhnagar Grand Palace.webp';
 import lbnagarbusinesscenter from './LB Nagar Business Center.webp';
 import ecilconventioncenter from './ECIL Convention Center.webp';
-import alwalgrandpalace from './Alwal Grand Palace.webp';
+import alwalgrandpalace from './Alwal Grand Palace 1.webp';
 import malkajgirigardenvenue from './Malkajgiri Garden Venue.webp';
 import kphbbusinesshub from './KPHB Business Hub.webp';
 
