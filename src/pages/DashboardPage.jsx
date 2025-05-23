@@ -124,7 +124,7 @@ const ViewBookings = () => {
     if (date) {
       const isAvailable = await checkAvailability(date);
       if (!isAvailable) {
-        alert('This date is not available. Please select another date.');
+        // alert('This date is not available. Please select another date.');
         setNewDate('');
       }
     }
@@ -373,9 +373,9 @@ const ViewBookings = () => {
               {/* <p className="text-xs text-gray-500 mt-2 flex items-center">
                 <Calendar className="h-3 w-3 mr-1" /> Bookings are available from May 8, 2025 onwards
               </p> */}
-              <p className="text-xs text-gray-500 mt-1 flex items-center">
+              {/* <p className="text-xs text-gray-500 mt-1 flex items-center">
                 <X className="h-3 w-3 mr-1" /> Venue is closed on Mondays
-              </p>
+              </p> */}
             </div>
             
             <div className="flex justify-end space-x-3">
