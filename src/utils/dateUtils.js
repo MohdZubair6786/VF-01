@@ -72,7 +72,7 @@ export const isValidBookingDate = (date) => {
   if (isMonday(checkDate)) {
     return {
       valid: false,
-      reason: "Venue is closed on Mondays"
+      reason: "Venue is closed on Tuesdays"
     };
   }
   
