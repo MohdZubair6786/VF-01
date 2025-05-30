@@ -29,6 +29,7 @@ const BookingPage = () => {
   
   // New form fields
   const [eventType, setEventType] = useState('');
+  const [marriageType, setMarriageType] = useState('');
   const [specialRequests, setSpecialRequests] = useState('');
   const [contactName, setContactName] = useState(user?.name || '');
   const [contactPhone, setContactPhone] = useState(user?.phone || '');
@@ -259,6 +260,11 @@ const BookingPage = () => {
     
     let total = venue.dailyRate;
     
+    // Apply 50% discount for second marriage
+    if (eventType === 'marriage' && marriageType === 'second') {
+      total = total * 0.5; // 50% discount
+    }
+    
     // Add cost for add-ons
     if (includeDecoration) total += venue.dailyRate * 0.15;
     if (includeCatering) total += venue.dailyRate * 0.25;
@@ -358,7 +364,7 @@ const BookingPage = () => {
   }
 
   const eventTypes = [
-    { value: 'wedding', label: 'Wedding' },
+    { value: 'marriage', label: 'Marriage' },
     { value: 'corporate', label: 'Corporate Event' },
     { value: 'birthday', label: 'Birthday Party' },
     { value: 'conference', label: 'Conference' },
@@ -464,7 +470,10 @@ const BookingPage = () => {
                             id="event_type"
                             className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200 appearance-none"
                             value={eventType}
-                            onChange={(e) => setEventType(e.target.value)}
+                            onChange={(e) => {
+                              setEventType(e.target.value);
+                              setMarriageType(''); // Reset marriage type when event type changes
+                            }}
                             required
                           >
                             <option value="" disabled>Select event type</option>
@@ -477,6 +486,35 @@ const BookingPage = () => {
                           </div>
                         </div>
                       </div>
+
+                      {eventType === 'marriage' && (
+                        <div>
+                          <label htmlFor="marriage_type" className="block text-sm font-medium text-gray-700 mb-1">
+                            Marriage Type*
+                          </label>
+                          <div className="relative">
+                            <select
+                              id="marriage_type"
+                              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200 appearance-none"
+                              value={marriageType}
+                              onChange={(e) => setMarriageType(e.target.value)}
+                              required
+                            >
+                              <option value="" disabled>Select marriage type</option>
+                              <option value="first">First Marriage</option>
+                              <option value="second">Second Marriage</option>
+                            </select>
+                            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                              <ChevronRight className="h-5 w-5 text-gray-400 rotate-90" />
+                            </div>
+                          </div>
+                          {marriageType === 'second' && (
+                            <p className="mt-2 text-sm font-medium text-green-600">
+                              You are eligible for a 50% discount!
+                            </p>
+                          )}
+                        </div>
+                      )}
 
                       <div>
                         <label htmlFor="guest_count" className="block text-sm font-medium text-gray-700 mb-1">
@@ -652,6 +690,13 @@ const BookingPage = () => {
                           <span className="text-gray-600">Basic Rate</span>
                           <span className="font-medium">{formatCurrency(venue?.dailyRate || 0)}</span>
                         </div>
+                        
+                        {eventType === 'marriage' && marriageType === 'second' && (
+                          <div className="flex justify-between py-2 border-b border-dashed border-gray-200">
+                            <span className="text-gray-600">Second Marriage Discount (50%)</span>
+                            <span className="font-medium text-green-600">-{formatCurrency(venue?.dailyRate * 0.5)}</span>
+                          </div>
+                        )}
                         
                         {includeDecoration && (
                           <div className="flex justify-between py-2 border-b border-dashed border-gray-200">
